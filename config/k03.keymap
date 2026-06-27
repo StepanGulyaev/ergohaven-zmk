@@ -17,24 +17,11 @@
         td_m: tap_dance_m {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <250>; /* Увеличили окно для двойного клика */
             bindings = <&kp M>, <&kp RBKT>;
         };
 
-        /* --- НАПРАВЛЕННЫЕ ПЕРЕКЛЮЧАТЕЛИ СЛОЕВ --- */
-        tog_on: toggle_layer_on_only {
-            compatible = "zmk,behavior-toggle-layer";
-            #binding-cells = <1>;
-            toggle-mode = "on";
-        };
-
-        tog_off: toggle_layer_off_only {
-            compatible = "zmk,behavior-toggle-layer";
-            #binding-cells = <1>;
-            toggle-mode = "off";
-        };
-
-        /* Макрос: Alt+Shift в ОС -> Ждем отпускания -> Включаем слой Ru (1) */
+        /* Макрос: Alt+Shift в ОС -> Переключаем клавиатуру на слой Ru (1) */
         lang_ru: lang_ru {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -45,11 +32,10 @@
                 , <&macro_press &kp LSHFT>
                 , <&macro_release &kp LSHFT>
                 , <&macro_release &kp LALT>
-                , <&macro_pause_for_release>
-                , <&tog_on 1>;
+                , <&to 1>; /* Жесткий переход на слой 1 */
         };
 
-        /* Макрос: Alt+Shift в ОС -> Ждем отпускания -> Выключаем слой Ru (1) */
+        /* Макрос: Alt+Shift в ОС -> Возвращаем клавиатуру на Base (0) */
         lang_en: lang_en {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -60,8 +46,7 @@
                 , <&macro_press &kp LSHFT>
                 , <&macro_release &kp LSHFT>
                 , <&macro_release &kp LALT>
-                , <&macro_pause_for_release>
-                , <&tog_off 1>;
+                , <&to 0>; /* Жесткий возврат на слой 0 */
         };
     };
 
