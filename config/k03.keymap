@@ -21,7 +21,20 @@
             bindings = <&kp M>, <&kp RBKT>;
         };
 
-        /* Макрос: Alt+Shift в ОС -> Переход на аппаратный слой Ru (1) */
+        /* --- НАПРАВЛЕННЫЕ ПЕРЕКЛЮЧАТЕЛИ СЛОЕВ --- */
+        tog_on: toggle_layer_on_only {
+            compatible = "zmk,behavior-toggle-layer";
+            #binding-cells = <1>;
+            toggle-mode = "on";
+        };
+
+        tog_off: toggle_layer_off_only {
+            compatible = "zmk,behavior-toggle-layer";
+            #binding-cells = <1>;
+            toggle-mode = "off";
+        };
+
+        /* Макрос: Alt+Shift в ОС -> Включаем аппаратный слой Ru (1) */
         lang_ru: lang_ru {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -32,10 +45,10 @@
                 , <&macro_press &kp LSHFT>
                 , <&macro_release &kp LSHFT>
                 , <&macro_release &kp LALT>
-                , <&to 1>;
+                , <&tog_on 1>;
         };
 
-        /* Макрос: Alt+Shift в ОС -> Возврат на аппаратный слой Base (0) */
+        /* Макрос: Alt+Shift в ОС -> Выключаем слой Ru (1), возвращаемся на Base (0) */
         lang_en: lang_en {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -46,7 +59,7 @@
                 , <&macro_press &kp LSHFT>
                 , <&macro_release &kp LSHFT>
                 , <&macro_release &kp LALT>
-                , <&to 0>;
+                , <&tog_off 1>;
         };
     };
 
@@ -60,7 +73,7 @@
 &kp ESC   &kp SQT   &kp COMMA &kp DOT   &kp P     &kp Y         &kp F     &kp G     &kp C     &kp R     &kp L     &kp FSLH
 &kp TAB   &kp A     &kp O     &kp E     &kp U     &kp I         &kp D     &kp H     &kp T     &kp N     &kp S     &kp MINUS
 &kp LCTRL &kp SEMI  &kp Q     &kp J     &kp K     &kp X &msc SCRL_DOWN  &msc SCRL_UP  &kp B     &kp M     &kp W     &kp V     &kp Z     &kp RGUI
-                    &kp LALT  &kp LSHFT &kp LGUI  &kp UNDER &mo 2 &kp RET   &kp RSHFT &kp BSPC  &kp RCTRL &kp RALT
+                    &kp LALT  &kp LSHFT &kp LGUI  &kp SPACE &mo 2 &kp RET   &kp RSHFT &kp BSPC  &kp RCTRL &kp RALT
             >;
             sensor-bindings = <&enc_vol>, <&enc_vol>, <&enc_vol>, <&enc_vol>, <&enc_vol>, <&enc_vol>;
         };
@@ -82,7 +95,7 @@
 &kp F1    &kp F2    &kp F3    &kp F4    &kp F5    &kp F6        &kp F7    &kp F8    &kp F9    &kp F10   &kp F11   &kp F12
 &none     &none     &none     &kp LBRC  &kp RBRC  &lang_ru      &kp PLUS  &none     &kp UP    &none     &none     &kp BSLH
 &none     &none     &none     &kp LPAR  &kp RPAR  &lang_en      &kp EQUAL &kp LEFT  &kp DOWN  &kp RIGHT &none     &none
-&none     &none     &none     &kp LBKT  &kp RBKT  &none  &none  &none     &kp MINUS &kp UNDER &none     &none &studio_unlock &kp PRINTSCREEN
+&none     &none     &none     &kp LBKT  &kp RBKT  &none  &none  &none     &kp MINUS &kp UNDER &none     &studio_unlock &kp PRINTSCREEN
                     &none     &none     &none     &none  &none  &kp CAPS  &none     &none     &none     &none
             >;
         };
