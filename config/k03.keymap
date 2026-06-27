@@ -17,36 +17,34 @@
         td_m: tap_dance_m {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <250>; /* Увеличили окно для двойного клика */
+            tapping-term-ms = <250>;
             bindings = <&kp M>, <&kp RBKT>;
         };
 
-        /* Макрос: Alt+Shift в ОС -> Переключаем клавиатуру на слой Ru (1) */
+        /* Макрос: Alt+Shift -> Ждем отпускания -> Идем на слой Ru (1) */
         lang_ru: lang_ru {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <30>;
             tap-ms = <30>;
             bindings
-                = <&macro_press &kp LALT>
-                , <&macro_press &kp LSHFT>
-                , <&macro_release &kp LSHFT>
-                , <&macro_release &kp LALT>
-                , <&to 1>; /* Жесткий переход на слой 1 */
+                = <&macro_press &kp LALT &kp LSHFT>
+                , <&macro_pause_for_release>
+                , <&macro_release &kp LSHFT &kp LALT>
+                , <&macro_tap &to 1>; /* <--- ВОТ ОНО: возвращаем режим Tap для команды слоя */
         };
 
-        /* Макрос: Alt+Shift в ОС -> Возвращаем клавиатуру на Base (0) */
+        /* Макрос: Alt+Shift -> Ждем отпускания -> Возвращаемся на слой Base (0) */
         lang_en: lang_en {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <30>;
             tap-ms = <30>;
             bindings
-                = <&macro_press &kp LALT>
-                , <&macro_press &kp LSHFT>
-                , <&macro_release &kp LSHFT>
-                , <&macro_release &kp LALT>
-                , <&to 0>; /* Жесткий возврат на слой 0 */
+                = <&macro_press &kp LALT &kp LSHFT>
+                , <&macro_pause_for_release>
+                , <&macro_release &kp LSHFT &kp LALT>
+                , <&macro_tap &to 0>; /* <--- Возвращаем режим Tap */
         };
     };
 
@@ -82,7 +80,7 @@
 &kp F1    &kp F2    &kp F3    &kp F4    &kp F5    &kp F6        &kp F7    &kp F8    &kp F9    &kp F10   &kp F11   &kp F12
 &none     &none     &none     &kp LBRC  &kp RBRC  &lang_ru      &kp PLUS  &none     &kp UP    &none     &none     &kp BSLH
 &none     &none     &none     &kp LPAR  &kp RPAR  &lang_en      &kp EQUAL &kp LEFT  &kp DOWN  &kp RIGHT &none     &none
-&none     &none     &none     &kp LBKT  &kp RBKT  &none  &none  &none     &kp MINUS &kp UNDER &none     &none     &studio_unlock &kp PRINTSCREEN
+&none     &none     &none     &kp LBKT  &kp RBKT  &none  &none  &none     &kp MINUS &kp UNDER &none     &studio_unlock &kp PRINTSCREEN &none
                     &none     &none     &none     &none  &trans &kp CAPS  &none     &none     &none     &none
             >;
         };
