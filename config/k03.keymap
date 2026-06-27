@@ -34,7 +34,7 @@
             toggle-mode = "off";
         };
 
-        /* Макрос: Alt+Shift в ОС -> Включаем аппаратный слой Ru (1) */
+        /* Макрос: Alt+Shift в ОС -> Ждем отпускания -> Включаем слой Ru (1) */
         lang_ru: lang_ru {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -45,10 +45,11 @@
                 , <&macro_press &kp LSHFT>
                 , <&macro_release &kp LSHFT>
                 , <&macro_release &kp LALT>
+                , <&macro_pause_for_release>
                 , <&tog_on 1>;
         };
 
-        /* Макрос: Alt+Shift в ОС -> Выключаем слой Ru (1), возвращаемся на Base (0) */
+        /* Макрос: Alt+Shift в ОС -> Ждем отпускания -> Выключаем слой Ru (1) */
         lang_en: lang_en {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -59,6 +60,7 @@
                 , <&macro_press &kp LSHFT>
                 , <&macro_release &kp LSHFT>
                 , <&macro_release &kp LALT>
+                , <&macro_pause_for_release>
                 , <&tog_off 1>;
         };
     };
@@ -95,8 +97,8 @@
 &kp F1    &kp F2    &kp F3    &kp F4    &kp F5    &kp F6        &kp F7    &kp F8    &kp F9    &kp F10   &kp F11   &kp F12
 &none     &none     &none     &kp LBRC  &kp RBRC  &lang_ru      &kp PLUS  &none     &kp UP    &none     &none     &kp BSLH
 &none     &none     &none     &kp LPAR  &kp RPAR  &lang_en      &kp EQUAL &kp LEFT  &kp DOWN  &kp RIGHT &none     &none
-&none     &none     &none     &kp LBKT  &kp RBKT  &none  &none  &none     &kp MINUS &kp UNDER &none     &studio_unlock &kp PRINTSCREEN
-                    &none     &none     &none     &none  &none  &kp CAPS  &none     &none     &none     &none
+&none     &none     &none     &kp LBKT  &kp RBKT  &none  &none  &none     &kp MINUS &kp UNDER &none     &none     &studio_unlock &kp PRINTSCREEN
+                    &none     &none     &none     &none  &trans &kp CAPS  &none     &none     &none     &none
             >;
         };
     };
